@@ -33,10 +33,7 @@ class MediaPathTransformer
      *     [
      *       'locale' => null,
      *       'scope'  => null,
-     *       'data'   => [
-     *         'filePath'         => 'cat_003.png',
-     *         'originalFilename' => 'cat_003.png'
-     *       ]
+     *       'data'   => '/tmp/cat_003.png',
      *     ]
      *   ]
      * ]
@@ -53,13 +50,12 @@ class MediaPathTransformer
         foreach ($attributeValues as $code => $values) {
             if (in_array($code, $mediaAttributes)) {
                 foreach ($values as $index => $value) {
-                    if (isset($value['data']) && isset($value['data']['filePath'])) {
-                        $dataFilePath = $value['data']['filePath'];
-                        $attributeValues[$code][$index]['data']['filePath'] = sprintf(
+                    if (isset($value['data']) && '' !== $value['data']) {
+                        $attributeValues[$code][$index]['data'] = sprintf(
                             '%s%s%s',
                             $filePath,
                             DIRECTORY_SEPARATOR,
-                            $dataFilePath
+                            $value['data']
                         );
                     }
                 }
