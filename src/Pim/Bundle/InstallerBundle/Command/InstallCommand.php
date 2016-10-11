@@ -53,6 +53,8 @@ class InstallCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        throw new \RuntimeException('Trolorlorlorrool');
+
         $forceInstall = $input->getOption('force');
         // if there is application is not installed or no --force option
         if ($this->getContainer()->hasParameter('installed') && $this->getContainer()->getParameter('installed')
