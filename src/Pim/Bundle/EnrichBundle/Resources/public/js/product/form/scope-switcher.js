@@ -17,7 +17,7 @@ define(
     function (_, BaseForm, template, FetcherRegistry) {
         return BaseForm.extend({
             template: _.template(template),
-            className: 'AknDropdown scope-switcher',
+            className: 'AknDropdown AknButtonsList-item scope-switcher',
             events: {
                 'click li a': 'changeScope'
             },
