@@ -206,8 +206,12 @@ class ProductEditForm extends Form
         }
 
         $subContainer = $this->spin(function () use ($label, $copy) {
-            return $this->findFieldContainer($label)
-                ->find('css', $copy ? '.copy-container .form-field' : '.form-field');
+            $selector = '.AknFieldContainer-formField';
+            if (false !== $copy) {
+                $selector = sprintf('.copy-container %s', $selector);
+            }
+
+            return $this->findFieldContainer($label)->find('css', $selector);
         }, sprintf('Cannot find "%s" sub container', $label));
 
         $field = $this->spin(function () use ($subContainer) {
@@ -317,7 +321,7 @@ class ProductEditForm extends Form
      */
     protected function fillMultiSelectField(NodeElement $fieldContainer, $values)
     {
-        $field = $fieldContainer->find('css', '.form-field');
+        $field = $fieldContainer->find('css', '.AknFieldContainer-formField');
 
         $link = $this->spin(function () use ($fieldContainer) {
             return $fieldContainer->find('css', 'ul.select2-choices');
@@ -548,7 +552,10 @@ class ProductEditForm extends Form
     {
         $fieldContainer = $this->findFieldContainer($label);
         $fieldType      = $this->getFieldType($fieldContainer);
-        $subContainer   = $fieldContainer->find('css', $copy ? '.copy-container .form-field' : '.form-field');
+        $subContainer   = $fieldContainer->find(
+            'css',
+            $copy ? '.copy-container .AknFieldContainer-formField' : '.AknFieldContainer-formField'
+        );
 
         switch ($fieldType) {
             case 'textArea':
