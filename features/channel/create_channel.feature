@@ -8,6 +8,7 @@ Feature: Create a channel
     Given a "footwear" catalog configuration
     And I am logged in as "Peter"
     When I am on the channel creation page
+    Then I should be on the families page
     Then I should see the Code, Default label, Currencies, Locales and Category tree fields
     And I fill in the following information:
       | Code          | foo             |
