@@ -122,6 +122,25 @@ class ProductController extends FOSRestController
         return new JsonResponse();
     }
 
+    public function postSingleAction(Request $request)
+    {
+        $standardProduct = json_decode($request->request->get('product'), true);
+
+        $product = $this->container->get('pim_catalog.repository.product')->findOneByIdentifier($standardProduct['identifier']);
+
+        if (null === $product) {
+            $product = $this->container->get('pim_catalog.builder.product')->createProduct($standardProduct['identifier']);
+        }
+
+        $this->container->get('pim_catalog.updater.product')->update($product, $standardProduct);
+
+        $this->container->get('pim_catalog.saver.product')->save($product);
+
+        echo sprintf("Product %s saved\n", $standardProduct['identifier']);
+
+        return new JsonResponse();
+    }
+
     /**
      * Return a single product
      *
