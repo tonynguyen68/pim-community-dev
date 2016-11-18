@@ -1,0 +1,9 @@
+parameters:
+    acme.custom.provider.field.range.class: Acme\Bundle\CustomBundle\Enrich\Provider\Field\RangeFieldProvider
+
+services:
+    acme.custom.provider.field.range:
+        class: %acme.custom.provider.field.range.class%
+        tags:
+            - { name: pim_enrich.provider.field, priority: 90 }
+
