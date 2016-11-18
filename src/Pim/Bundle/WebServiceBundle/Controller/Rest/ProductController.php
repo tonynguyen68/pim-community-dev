@@ -62,6 +62,66 @@ class ProductController extends FOSRestController
         return $this->handleGetRequest($identifier, $channels, $locales);
     }
 
+    public function listAction(Request $request)
+    {
+        $userContext = $this->get('pim_user.context.user');
+        $availableChannels = array_keys($userContext->getChannelChoicesWithUserChannel());
+        $availableLocales = $userContext->getUserLocaleCodes();
+
+        $channels = $request->get('channels', $request->get('channel', null));
+        if ($channels !== null) {
+            $channels = explode(',', $channels);
+
+            foreach ($channels as $channel) {
+                if (!in_array($channel, $availableChannels)) {
+                    return new Response(sprintf('Channel "%s" does not exist or is not available', $channel), 403);
+                }
+            }
+        }
+
+        $locales = $request->get('locales', $request->get('locale', null));
+        if ($locales !== null) {
+            $locales = explode(',', $locales);
+
+            foreach ($locales as $locale) {
+                if (!in_array($locale, $availableLocales)) {
+                    return new Response(sprintf('Locale "%s" does not exist or is not available', $locale), 403);
+                }
+            }
+        }
+
+        $products = $this->container->get('pim_catalog.repository.product')->findBy([], [], 100);
+
+        $data = [];
+        foreach ($products as $product) {
+            $a = $this->serializeProduct($product, $channels, $locales);
+            $data[] = $a;
+        }
+
+        return new JsonResponse($data);
+    }
+
+    public function postAction(Request $request)
+    {
+        $products = json_decode($request->request->get('products'), true);
+
+        foreach ($products as $standardProduct) {
+            $product = $this->container->get('pim_catalog.repository.product')->findOneByIdentifier($standardProduct['identifier']);
+
+            if (null === $product) {
+                $product = $this->container->get('pim_catalog.builder.product')->createProduct($standardProduct['identifier']);
+            }
+
+            $this->container->get('pim_catalog.updater.product')->update($product, $standardProduct);
+
+            $this->container->get('pim_catalog.saver.product')->save($product);
+
+            echo sprintf("Product %s saved\n", $standardProduct['identifier']);
+        }
+
+        return new JsonResponse();
+    }
+
     /**
      * Return a single product
      *

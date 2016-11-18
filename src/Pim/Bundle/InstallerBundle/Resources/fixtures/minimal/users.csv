@@ -1,2 +1,2 @@
-username;first_name;last_name;email;password;catalog_locale;user_locale;catalog_scope;default_tree;roles;groups;enabled
-admin;John;Doe;admin@example.com;admin;en_US;en_US;ecommerce;master;ROLE_ADMINISTRATOR;IT support;1
+username;password;email;first_name;last_name;catalog_locale;catalog_scope;default_tree;roles;groups;enabled;user_locale
+admin;admin;admin@example.com;Peter;Doe;fr_FR;ecommerce;master;ROLE_ADMINISTRATOR;"IT support";1;en_US
