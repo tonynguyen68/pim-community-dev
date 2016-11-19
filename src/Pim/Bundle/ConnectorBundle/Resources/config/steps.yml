@@ -574,3 +574,13 @@ services:
             - '@pim_connector.processor.normalization.group_type'
             - '@pim_connector.writer.file.xlsx_group_type'
             - 10
+
+    pim_connector.step.json_product.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'import'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_connector.reader.file.json_product'
+            - '@pim_connector.processor.denormalization.product'
+            - '@pim_connector.writer.database.product'
