@@ -4,8 +4,10 @@ namespace Pim\Component\Connector\Reader\File\Json;
 
 use Akeneo\Component\Batch\Item\FlushableInterface;
 use Akeneo\Component\Batch\Item\ItemReaderInterface;
+use Akeneo\Component\Batch\Model\StepExecution;
 use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 use Pim\Component\Connector\Reader\File\FileIteratorFactory;
+use Pim\Component\Connector\Reader\File\FileIteratorInterface;
 
 /**
  * Product csv reader
@@ -75,8 +77,6 @@ class ProductReader implements ItemReaderInterface, StepExecutionAwareInterface,
         }
 
         return $standardProduct;
-
-
     }
 
     /**

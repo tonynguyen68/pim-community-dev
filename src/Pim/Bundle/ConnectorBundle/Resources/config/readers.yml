@@ -113,7 +113,7 @@ services:
     pim_connector.reader.file.json_iterator_factory:
         class: '%pim_connector.reader.file.file_iterator_factory.class%'
         arguments:
-            - '%pim_connector.reader.file.flat_file_iterator.class%'
+            - '%pim_connector.reader.file.json_file_iterator.class%'
             - 'json'
 
     pim_connector.reader.file.media_path_transformer:

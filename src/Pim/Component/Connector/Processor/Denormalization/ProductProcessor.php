@@ -95,6 +95,7 @@ class ProductProcessor extends AbstractProcessor implements ItemProcessorInterfa
         $jobParameters = $this->stepExecution->getJobParameters();
         $enabledComparison = $jobParameters->get('enabledComparison');
         if ($enabledComparison) {
+            /*
             $filteredItem = $this->filterIdenticalData($product, $filteredItem);
 
             if (empty($filteredItem) && null !== $product->getId()) {
@@ -103,6 +104,7 @@ class ProductProcessor extends AbstractProcessor implements ItemProcessorInterfa
 
                 return null;
             }
+            */
         }
 
         try {

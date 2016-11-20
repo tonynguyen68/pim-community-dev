@@ -129,9 +129,9 @@ services:
             - '@event_dispatcher'
             - '@akeneo_batch.job_repository'
             -
-                - '@pim_connector.step.charset_validator'
+                #- '@pim_connector.step.charset_validator'
                 - '@pim_connector.step.csv_product.import'
-                - '@pim_connector.step.csv_product.import_associations'
+                #- '@pim_connector.step.csv_product.import_associations'
         tags:
             - { name: akeneo_batch.job, connector: '%pim_connector.connector_name.csv%', type: '%pim_connector.job.import_type%' }
 
@@ -675,6 +675,6 @@ services:
             - '@event_dispatcher'
             - '@akeneo_batch.job_repository'
             -
-                - '@pim_connector.step.csv_product.import'
+                - '@pim_connector.step.json_product.import'
         tags:
             - { name: akeneo_batch.job, connector: '%pim_connector.connector_name.json%', type: '%pim_connector.job.import_type%' }

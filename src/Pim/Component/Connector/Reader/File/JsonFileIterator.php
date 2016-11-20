@@ -4,12 +4,7 @@ namespace Pim\Component\Connector\Reader\File;
 
 use Akeneo\Component\Batch\Item\InvalidItemException;
 use Box\Spout\Common\Exception\UnsupportedTypeException;
-use Box\Spout\Common\Type;
-use Box\Spout\Reader\IteratorInterface;
-use Box\Spout\Reader\ReaderFactory;
-use Box\Spout\Reader\ReaderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -57,7 +52,7 @@ class JsonFileIterator implements FileIteratorInterface
             throw new FileNotFoundException(sprintf('File "%s" could not be found', $this->filePath));
         }
 
-        $this->products = json_decode(file_get_contents($filePath));
+        $this->products = json_decode(file_get_contents($filePath), true);
     }
 
     /**
@@ -65,7 +60,7 @@ class JsonFileIterator implements FileIteratorInterface
      */
     public function rewind()
     {
-        $this->cursor = 0;
+        $this->cursor = -1;
     }
 
     /**
@@ -83,7 +78,7 @@ class JsonFileIterator implements FileIteratorInterface
      */
     public function next()
     {
-        $this->products++;
+        $this->cursor++;
     }
 
     /**
@@ -99,7 +94,9 @@ class JsonFileIterator implements FileIteratorInterface
      */
     public function valid()
     {
-        return $this->cursor < count($this->products);
+        $cursor = $this->cursor;
+
+        return $cursor+=1 < count($this->products);
     }
 
     /**
